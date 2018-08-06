@@ -1,42 +1,52 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-	<table>
-		<tr v-for="(row, rowindex) in field" :key="`row${rowindex}`">
-			<td v-for="(el, colindex) in row" :key="`col${colindex}`">
-			<cell :terrain="el" />
-			</td>
-		</tr>
-	</table>
+    <table>
+      <tr v-for="(row, rowindex) in field" :key="`row${rowindex}`">
+        <td v-for="(el, colindex) in row" :key="`col${colindex}`">
+          <cell :terrain="el.terrain" :resource="el.resource" :objects="el.objects" />
+        </td>
+      </tr>
+    </table>
   </div>
 </template>
 
 <script>
-import Cell from '@/components/Cell';
+import Cell from '@/components/Cell'
+import TERRAIN from '@/constants/terrain'
+import RESOURCES from '@/constants/resources'
+import OBJECTS from '@/constants/objects'
 
+const sampleField = [
+  [{terrain: TERRAIN.PLAIN, resource: 1, objects: []},
+    {terrain: TERRAIN.PLAIN, resource: 0, objects: []},
+    {terrain: TERRAIN.PLAIN, resource: 0, objects: []}],
+  [{terrain: TERRAIN.BASE, resource: 0, objects: [OBJECTS.BASE, OBJECTS.ROVER]},
+    {terrain: TERRAIN.HILLS, resource: RESOURCES.HOLE, objects: []},
+    {terrain: TERRAIN.HILLS, resource: RESOURCES.HOLE, objects: []}],
+  [{terrain: TERRAIN.PLAIN, resource: 0, objects: []},
+    {terrain: TERRAIN.HILLS, resource: 1, objects: [OBJECTS.ROVER]},
+    {terrain: TERRAIN.RIVER, resource: 0, objects: []}],
+  [{terrain: TERRAIN.RIVER, resource: 1, objects: []},
+    {terrain: TERRAIN.RIVER, resource: 0, objects: []},
+    {terrain: TERRAIN.PLAIN, resource: 1, objects: []}]
+]
 
 export default {
   name: 'Field',
-  data () {
+  data() {
     return {
-		msg: 'hello',
-      field: [
-	  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-	  [1,1,2,1,1,1,1,3,3,1],
-	  [1,2,2,2,1,1,1,3,1,1],
-	  [1,1,2,1,1,1,1,3,1,1],
-	  [1,1,1,1,1,1,3,1,1,1],
-	  [1,1,1,1,3,3,1,1,1,1],
-	  [1,1,3,3,1,1,2,2,1,1],
-	  [1,1,3,1,1,2,2,2,2,1],
-	  [1,1,3,1,1,2,2,2,2,1],
-	  [1,1,1,1,1,1,2,2,1,1],
-	  [1,1,1,1,1,1,1,1,1,1]
-	  ]
+      msg: 'Martian surface'
+    }
+  },
+  computed: {
+    field() {
+      // return sampleField
+      return this.$store.state.field || sampleField
     }
   },
   components: {
-	cell: Cell
+    cell: Cell
   }
 }
 </script>

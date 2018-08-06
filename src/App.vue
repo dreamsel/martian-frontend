@@ -6,7 +6,13 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+
+  mounted() {
+    setInterval(() => {
+      this.$store.dispatch('fetchField')
+    }, 5000)
+  }
 }
 </script>
 
