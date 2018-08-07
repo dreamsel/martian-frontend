@@ -26,7 +26,8 @@ export default {
       if (this.objects.length > 0) {
         return this.objects.map(obj => obj === OBJECTS.ROVER ? '🚌' : obj === OBJECTS.BASE ? '🏡' : '').join('')
       } else if (this.resource) {
-        return this.resource === RESOURCES.HOLE ? '🕳' : '🔮' // 🏮💎💧  // 🔶🔷🖲🗻🗳
+        // eslint-disable-next-line eqeqeq
+        return this.resource == RESOURCES.HOLE ? '🕳' : '🔮' // 🏮💎💧  // 🔶🔷🖲🗻🗳
       } else {
         return ''
       }

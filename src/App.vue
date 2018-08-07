@@ -11,7 +11,7 @@ export default {
   mounted() {
     setInterval(() => {
       this.$store.dispatch('fetchField')
-    }, 5000)
+    }, 1000)
   }
 }
 </script>
