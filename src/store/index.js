@@ -6,13 +6,17 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    field: []
+    field: [],
+    players: []
   },
   getters: {
   },
   mutations: {
     setField(state, field) {
       state.field = field
+    },
+    setPlayers(state, players) {
+      state.players = players
     }
   },
   actions: {
@@ -21,6 +25,7 @@ const store = new Vuex.Store({
         .then((response) => {
           if (response.success) {
             commit('setField', response.field)
+            commit('setPlayers', response.players)
           }
           return response
         })
