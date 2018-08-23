@@ -1,6 +1,7 @@
 <template>
   <div :class="['cell', terrainClass]">
-    {{cellcontent}}
+    <div :class="terrainClass" />
+    <div :class="['object', cellobject]"></div>
   </div>
 </template>
 
@@ -16,13 +17,24 @@ export default {
     terrainClass() {
       switch (this.terrain) {
         case TERRAIN.PLAIN: return 'plain'
-        case TERRAIN.HILLS: return 'hill'
+        case TERRAIN.HILLS: return 'plain'
         case TERRAIN.RIVER: return 'river'
         case TERRAIN.BASE: return 'base'
         default: return ''
       }
     },
-    cellcontent() {
+
+    cellobject() {
+      if (this.resource == RESOURCES.HOLE) {
+        return 'hole'
+      }
+      if (this.terrain == TERRAIN.HILLS) {
+        return 'hill'
+      }
+      if (this.terrain == TERRAIN.BASE) {
+        return 'base'
+      }
+      return ''
       if (this.objects.length > 0) {
         return this.objects.map(obj => obj === OBJECTS.ROVER ? '🚌' : obj === OBJECTS.BASE ? '🏡' : '').join('')
       } else if (this.resource) {
@@ -46,17 +58,44 @@ export default {
   padding: auto;
   color: white;
   font-weight:bold;
-}
-.hill {
-  background-color: red;
-}
-.river {
-  background-color: blue;
+  background-size:     cover;
+  background-repeat:   no-repeat;
+  background-position: center center;
+  position:relative;
+  overflow: hidden;
 }
 .plain {
-  background-color: green;
+  background-image: url(../assets/plain2.png);
+}
+.hill {
+
+  background-image: url(../assets/plain2.png);
+}
+.river {
+  background-image: url(../assets/desert.png);
 }
 .base {
   background-color: #bbb;
 }
+.cell .object {
+  transform: rotateX(-60deg) rotateZ(-35deg) scaleY(1.6) skewY(-10deg);
+  position: absolute;
+  left:0;
+  top:0;
+  width: 50px;
+  height: 50px;
+}
+.object.hole {
+  background: url(../assets/hole.png) center center no-repeat;
+  background-size:  100%;
+}
+.object.hill {
+  background: url(../assets/hill.png) center center no-repeat;
+  background-size:  120%;
+}
+.object.base {
+  background: url(../assets/station.png) center center no-repeat;
+  background-size:  120%;
+}
+
 </style>

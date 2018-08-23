@@ -9,6 +9,27 @@
           </td>
         </tr>
       </table>
+      <table class="field1">
+        <tr v-for="(row, rowindex) in field" :key="`row${rowindex}`">
+          <td v-for="(el, colindex) in row" :key="`col${colindex}`">
+            <cell :terrain="el.terrain" :resource="el.resource" :objects="el.objects" />
+          </td>
+        </tr>
+      </table>
+      <table class="field2">
+        <tr v-for="(row, rowindex) in field" :key="`row${rowindex}`">
+          <td v-for="(el, colindex) in row" :key="`col${colindex}`">
+            <cell :terrain="el.terrain" :resource="el.resource" :objects="el.objects" />
+          </td>
+        </tr>
+      </table>
+      <table class="field3">
+        <tr v-for="(row, rowindex) in field" :key="`row${rowindex}`">
+          <td v-for="(el, colindex) in row" :key="`col${colindex}`">
+            <cell :terrain="el.terrain" :resource="el.resource" :objects="el.objects" />
+          </td>
+        </tr>
+      </table>
       <div class="players-info">
         <div class="player-info" v-for="(player, index) in players" :key="`player${index}`">
           <player-info :player="player" />
@@ -49,8 +70,8 @@ export default {
   },
   computed: {
     field() {
-      // return sampleField
-      return this.$store.state.field || sampleField
+      return sampleField
+      // return this.$store.state.field || sampleField
     },
     players() {
       return this.$store.state.players || []
@@ -76,5 +97,26 @@ h1, h2 {
 }
 .players-info {
   flex: 1 1 auto;
+}
+tr,td {
+    height: 50px;
+}
+table {
+  margin-left: 50px;
+  margin-right: 50px;
+  transform-style: preserve-3d;
+  transform: rotateX(60deg) rotateZ(45deg);
+}
+table.field1
+{
+  transform: rotateX(45deg) rotateY(0deg) rotateZ(45deg);
+}
+table.field2
+{
+  transform: rotateX(30deg) rotateY(0deg) rotateZ(45deg);
+}
+table.field3
+{
+  transform: rotateX(0deg) rotateY(0deg) rotateZ(45deg);
 }
 </style>
