@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <div> <p>Enter player id</p>
+      <input placeholder="player_id" v-model="playerId"/>
+    </div>
     <router-view/>
   </div>
 </template>
@@ -7,10 +10,16 @@
 <script>
 export default {
   name: 'App',
-
+  data() {
+    return {
+      playerId: ''
+    }
+  },
   mounted() {
     setInterval(() => {
-      this.$store.dispatch('fetchField')
+      if (this.playerId) {
+        this.$store.dispatch('fetchField', this.playerId)
+      }
     }, 1000)
   }
 }

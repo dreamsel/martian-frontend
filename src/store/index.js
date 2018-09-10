@@ -7,7 +7,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     field: [],
-    players: []
+    players: [],
+    player: {}
   },
   getters: {
   },
@@ -17,15 +18,18 @@ const store = new Vuex.Store({
     },
     setPlayers(state, players) {
       state.players = players
+    },
+    setPlayer(state, player) {
+      state.player = player
     }
   },
   actions: {
-    fetchField({commit}) {
-      return http.get('/field')
+    fetchField({commit}, playerId) {
+      return http.get(`/field/${playerId}`)
         .then((response) => {
           if (response.success) {
             commit('setField', response.field)
-            commit('setPlayers', response.players)
+            commit('setPlayer', response.player)
           }
           return response
         })

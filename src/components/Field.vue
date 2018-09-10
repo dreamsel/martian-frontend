@@ -2,36 +2,17 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <div class="wrapper">
-      <table class="field">
-        <tr v-for="(row, rowindex) in field" :key="`row${rowindex}`">
-          <td v-for="(el, colindex) in row" :key="`col${colindex}`">
-            <cell :terrain="el.terrain" :resource="el.resource" :objects="el.objects" />
-          </td>
-        </tr>
-      </table>
-      <table class="field1">
-        <tr v-for="(row, rowindex) in field" :key="`row${rowindex}`">
-          <td v-for="(el, colindex) in row" :key="`col${colindex}`">
-            <cell :terrain="el.terrain" :resource="el.resource" :objects="el.objects" />
-          </td>
-        </tr>
-      </table>
-      <table class="field2">
-        <tr v-for="(row, rowindex) in field" :key="`row${rowindex}`">
-          <td v-for="(el, colindex) in row" :key="`col${colindex}`">
-            <cell :terrain="el.terrain" :resource="el.resource" :objects="el.objects" />
-          </td>
-        </tr>
-      </table>
-      <table class="field3">
-        <tr v-for="(row, rowindex) in field" :key="`row${rowindex}`">
-          <td v-for="(el, colindex) in row" :key="`col${colindex}`">
-            <cell :terrain="el.terrain" :resource="el.resource" :objects="el.objects" />
-          </td>
-        </tr>
-      </table>
+      <div class="field">
+        <table>
+          <tr v-for="(row, rowindex) in field" :key="`row${rowindex}`">
+            <td v-for="(el, colindex) in row" :key="`col${colindex}`">
+              <cell :terrain="el.terrain" :resource="el.resource" :objects="el.objects" />
+            </td>
+          </tr>
+        </table>
+      </div>
       <div class="players-info">
-        <div class="player-info" v-for="(player, index) in players" :key="`player${index}`">
+        <div class="player-info">
           <player-info :player="player" />
         </div>
       </div>
@@ -49,16 +30,21 @@ import OBJECTS from '@/constants/objects'
 const sampleField = [
   [{terrain: TERRAIN.PLAIN, resource: 1, objects: []},
     {terrain: TERRAIN.PLAIN, resource: 0, objects: []},
+    {terrain: TERRAIN.PLAIN, resource: 0, objects: []},
     {terrain: TERRAIN.PLAIN, resource: 0, objects: []}],
-  [{terrain: TERRAIN.BASE, resource: 0, objects: [OBJECTS.BASE, OBJECTS.ROVER]},
+  [
+    {terrain: TERRAIN.PLAIN, resource: 0, objects: []},
+    {terrain: TERRAIN.BASE, resource: 0, objects: [OBJECTS.BASE, OBJECTS.ROVER]},
     {terrain: TERRAIN.HILLS, resource: RESOURCES.HOLE, objects: []},
     {terrain: TERRAIN.HILLS, resource: RESOURCES.HOLE, objects: []}],
   [{terrain: TERRAIN.PLAIN, resource: 0, objects: []},
-    {terrain: TERRAIN.HILLS, resource: 1, objects: [OBJECTS.ROVER]},
+    {terrain: TERRAIN.HILLS, resource: 2, objects: []},
+    {terrain: TERRAIN.PLAIN, resource: 0, objects: [OBJECTS.ROVER]},
     {terrain: TERRAIN.RIVER, resource: 0, objects: []}],
-  [{terrain: TERRAIN.RIVER, resource: 1, objects: []},
-    {terrain: TERRAIN.RIVER, resource: 0, objects: []},
-    {terrain: TERRAIN.PLAIN, resource: 1, objects: []}]
+  [{terrain: TERRAIN.RIVER, resource: 3, objects: []},
+    {terrain: TERRAIN.MOUNTAIN, resource: 0, objects: []},
+    {terrain: TERRAIN.PLAIN, resource: 0, objects: []},
+    {terrain: TERRAIN.CRATER, resource: 4, objects: []}]
 ]
 
 export default {
@@ -70,11 +56,13 @@ export default {
   },
   computed: {
     field() {
-      return sampleField
-      // return this.$store.state.field || sampleField
+      return this.$store.state.field || sampleField
     },
     players() {
       return this.$store.state.players || []
+    },
+    player() {
+      return this.$store.state.player || {}
     }
   },
   components: {
@@ -94,29 +82,31 @@ h1, h2 {
 }
 .field {
   flex: 1 1 auto;
+  padding: 70pt;
+  margin: auto;
+  background: url('../assets/bg.png') center center no-repeat;
+  background-size: contain;
+  text-align: center;
 }
 .players-info {
   flex: 1 1 auto;
 }
 tr,td {
     height: 50px;
+    border: none;
+    margin: 0;
+    padding: 0;
 }
 table {
+  margin: auto;
+  border-collapse: collapse;
+  border: none;
+  border-spacing: 0;
+/*
   margin-left: 50px;
   margin-right: 50px;
   transform-style: preserve-3d;
   transform: rotateX(60deg) rotateZ(45deg);
-}
-table.field1
-{
-  transform: rotateX(45deg) rotateY(0deg) rotateZ(45deg);
-}
-table.field2
-{
-  transform: rotateX(30deg) rotateY(0deg) rotateZ(45deg);
-}
-table.field3
-{
-  transform: rotateX(0deg) rotateY(0deg) rotateZ(45deg);
+*/
 }
 </style>
